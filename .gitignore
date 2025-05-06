@@ -1,6 +1,7 @@
 # Python
 *.py[cod]
 __pycache__/
+*.pyc
 
 # Environment
 .env
@@ -13,3 +14,4 @@ db.sqlite3
 # Django
 .DS_Store
 Thumbs.db
+*.log
