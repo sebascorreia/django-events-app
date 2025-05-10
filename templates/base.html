@@ -1,39 +1,37 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% load static %}
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}My Website{% endblock %}</title>
+    <title>{% block title %}MySite{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-    <header>
-        <nav class="navbar">
-            <div class="nav-left">
-                <a href="{% url 'dashboard' %}">Home</a>
-                <a href="#">About</a>
-                <a href="#">Contact</a>
-            </div>
-            <div class="nav-right">
-                {% if user.is_authenticated %}
-                    <div class="dropdown">
-                        <button class="dropbtn">{{ user.username }}</button>
-                        <div class="dropdown-content">
-                            <a href="{% url 'profile' %}">Profile</a>
-                            <a href="{% url 'logout' %}">Logout</a>
-                        </div>
+    <nav class="navbar">
+        <div class="navbar-left">
+            <span class="nav-item">Home</span>
+            <span class="nav-item">About</span>
+            <span class="nav-item">Contact</span>
+        </div>
+        <div class="navbar-right">
+            {% if user.is_authenticated %}
+                <div class="avatar-wrapper" onclick="toggleDropdown()">
+                    <div class="avatar-circle">{{ user.username|slice:":1" }}</div>
+                    <div id="dropdown-menu" class="dropdown hidden">
+                        <a href="{% url 'profile' %}">Profile</a>
+                        <a href="{% url 'logout' %}">Logout</a>
                     </div>
-                {% else %}
-                    <a href="{% url 'login' %}">Login</a>
-                    <a href="{% url 'register' %}">Register</a>
-                {% endif %}
-            </div>
-        </nav>
-    </header>
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
+                </div>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+<script src="{% static 'js/navbar.js' %}"></script>
+
 </body>
 </html>
