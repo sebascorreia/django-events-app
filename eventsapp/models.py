@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.gis.db import models as gis_models
-
+from django.core.exceptions import ValidationError
 # Create your models here.
 class Tag(models.Model):
     TAG_TYPES = [
@@ -54,7 +54,11 @@ class Schedule(models.Model):
     time= models.TimeField()
     # if both artist and info are deleted then the schedule entry should be deleted
     # make sure either artist or info is provided
-    
+    def clean(self):
+        if not self.artist and not self.info:
+            raise ValidationError("Either artist or info must be provided.")
+        if self.artist and self.info:
+            raise ValidationError("Please only provide either artist or info,")
     def __str__(self):
         if self.artist:
             return f"{self.artist.name} at {self.time} for {self.event.name}"

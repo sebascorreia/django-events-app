@@ -1,58 +1,12 @@
 from django.contrib import admin
-from .models import Artist, Event, Venue, Tag, ArtistTag, EventTag, VenueTag
-from .forms import ArtistForm, VenueForm, EventForm
-from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
-from django.db.models.signals import m2m_changed
-from django import forms
+from .models import Artist, Event, Venue, Tag, ArtistTag, EventTag, VenueTag, Schedule
+from .forms import ArtistForm, VenueForm, EventForm, BaseTagInlineForm
 
 # Register your models here.
-class BaseTagInlineForm(forms.ModelForm):
-    existing_tag = forms.ModelChoiceField(
-        queryset=Tag.objects.none(),
-        required=False,
-        label="Choose existing tag"
-    )
-    new_tag_name = forms.CharField(
-        required=False,
-        label="Or create new tag",
-        max_length=50
-    )
-
-    class Meta:
-        model = None  # will be set dynamically
-        fields = ['existing_tag', 'new_tag_name']
-        exclude = ['tag']
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        tag_type = self.tag_type
-        self.fields['existing_tag'].queryset = Tag.objects.filter(tag_type=tag_type)
-        if self.instance and self.instance.pk:
-            self.fields['existing_tag'].initial = self.instance.tag
-
-    def clean(self):
-        cleaned_data = super().clean()
-        existing = cleaned_data.get('existing_tag')
-        new = cleaned_data.get('new_tag_name')
-
-        if not existing and not new:
-            raise forms.ValidationError("Please select an existing tag or enter a new one.")
-        if existing and new:
-            raise forms.ValidationError("Please use either an existing tag or a new one, not both.")
-        return cleaned_data
-
-    def save(self, commit=True):
-        cleaned_data = self.cleaned_data
-        if cleaned_data.get('existing_tag'):
-            self.instance.tag = cleaned_data['existing_tag']
-        else:
-            tag, _ = Tag.objects.get_or_create(
-                name=cleaned_data['new_tag_name'],
-                defaults={'tag_type': self.tag_type}
-            )
-            self.instance.tag = tag
-        return super().save(commit=commit)
-
+class ScheduleInline(admin.TabularInline):
+    model = Schedule
+    extra = 1
+    fields = ['artist', 'info', 'time']
 class BaseTagInline(admin.StackedInline):
     extra = 1
     tag_type = None
@@ -102,9 +56,13 @@ class VenueAdmin(admin.ModelAdmin):
 
 class EventAdmin(admin.ModelAdmin):
     form = EventForm
-    inlines = [EventTagInline]
+    inlines = [EventTagInline, ScheduleInline]
     list_display = ('name', 'date', 'venue',)
     search_fields = ('name', 'venue__name', 'tags__name',)
+    filter_horizontal = ('artists',)
+    autocomplete_fields = ['venue']
+
+
 
 admin.site.register(Artist, ArtistAdmin)
 admin.site.register(Venue, VenueAdmin)
