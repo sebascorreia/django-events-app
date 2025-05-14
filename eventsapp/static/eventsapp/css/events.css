@@ -1,0 +1,125 @@
+.event-header {
+    display: flex;
+    align-items: flex-start;
+    background-color: #111;
+    gap:20px;
+    color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+.event-image-container {
+    flex-shrink: 0;
+    margin-right: 20px;
+}
+.event-image{
+    width: 250px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid #444; /* Subtle border for the image */
+}
+.event-info {
+    flex: 1.2;
+    margin-right: 20px;
+}
+.event-info h1 {
+    font-size: 2rem;
+    margin: 0;
+}
+.event-info h3 {
+    font-size: 1.2rem;
+    margin: 5px 0 0;
+    color: #ccc; /* Slightly lighter gray for the description */
+}
+.event-info p {
+    font-size: 1.0rem;
+    margin: 5px 0 0;
+    color: #ccc; /* Slightly lighter gray for the description */
+}
+.event-about-container {
+    flex : 1.8;
+    margin-right: 20px;
+}
+.event-schedule-container{
+    flex:1;
+
+}
+.schedule-list{
+    list-style-position: inside;
+    padding-left: 0;
+    margin: 0;
+}
+
+
+.artist-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.artist-card {
+    border: 1px solid #ccc;
+    background-color: #111;
+    border-radius: 8px;
+    padding: 16px;
+    width: 200px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.artist-card p {
+    font-size: 1rem;
+    margin: 5px 0 0;
+    color: #ccc; /* Slightly lighter gray for the tag */
+}
+
+.artist-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 8px;
+}
+.artist-card-link, .venue-link{
+    text-decoration:none;
+    color: inherit;
+}
+
+.venue-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #111; /* Dark background for the venue section */
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.venue-info {
+    flex: 1;
+}
+
+.venue-info h2 {
+    font-size: 1.8rem;
+    margin: 0;
+    color: #fff; /* White for the venue name */
+}
+
+.venue-info p {
+    font-size: 1rem;
+    margin: 5px 0 0;
+    color: #ccc; /* Slightly lighter gray for the address */
+}
+
+.venue-image-container {
+    flex-shrink: 0;
+    margin-left: 20px;
+}
+
+.venue-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%; /* Circular image */
+    border: 2px solid #444; /* Subtle border for the image */
+}

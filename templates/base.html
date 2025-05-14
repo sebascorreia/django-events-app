@@ -3,15 +3,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}MySite{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
     <nav class="navbar">
         <div class="navbar-left">
-            <span class="nav-item">Home</span>
-            <span class="nav-item">About</span>
-            <span class="nav-item">Contact</span>
+            <a href="/" class="nav-item">Home</a>
+            <a href="/about/" class="nav-item">About</a>
+            <a href="/contact/" class="nav-item">Contact</a>
         </div>
         <div class="navbar-right">
             {% if user.is_authenticated %}
@@ -28,10 +29,11 @@
         </div>
     </nav>
 
-    <div class="content">
+    <!-- Centralized content wrapper -->
+    <div class="page-container">
         {% block content %}{% endblock %}
     </div>
-<script src="{% static 'js/navbar.js' %}"></script>
 
+    <script src="{% static 'js/navbar.js' %}"></script>
 </body>
 </html>

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Artist{% endblock %}
+
+{% block content %}
+{% if artist %}
+    <h1>{{ artist.name }}</h1>
+    <p>Genre: {{ artist.get_tags }}</p>
+    <p>about: {{ artist.about }}</p>
+    <h2>Upcoming Events</h2>
+    <ul>
+        {% for event in artist.get_events %}
+            <li>{{ event.name }} on {{ event.date }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <h1>Artist not found</h1>
+{% endif %}
+{% endblock %}

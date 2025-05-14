@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %}Event{% endblock %}
+
+
+{% block content %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'eventsapp/css/events.css' %}"> </link>
+
+
+{% if event %}
+    <div class="event-header" >
+        <div class="event-image-container">
+            <img src="{{ event.image.url }}" alt="{{ event.name }}" class="event-image">
+        </div>
+        <div class="event-info">
+            <h1>{{ event.name }}</h1>
+            <h3> {{ event.venue.name }}</h3>
+            <p>{{ event.date }}</p>
+            <p>{{event.get_tags }}</p>
+            <p>£{{ event.ticket_price }}</p>
+        </div>
+    
+        <div class="event-about-container">
+            <h2>About</h2>
+            <p>{{ event.about }}</p>
+        </div>
+        <div class="event-schedule-container">
+            <h2>Schedule</h2>
+            <ul class="schedule-list">
+                {% for schedule in event.get_schedule %}
+                    {% if schedule.artist %}
+                        <li>
+                            <span class="schedule-artist">{{ schedule.artist.name }}:</span>
+                            <span class="schedule-time">{{ schedule.time }}</span>
+                        </li>
+                    {% else %}
+                        <li>
+                            <span class="schedule-info">{{ schedule.info }}:</span>
+                            <span class="schedule-time">{{ schedule.time }}</span>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    
+
+    <h2>Lineup </h2> 
+    <div class="artist-cards">
+        {% for artist in event.get_artists %}
+        <a href="{% url 'artist_detail' artist.id %}" class="artist-card-link">
+            <div class="artist-card">
+                <img src="{{ artist.image.url }}" alt="{{ artist.name }}" class="artist-image">
+                <h3> {{ artist.name }} </h3>
+                <p>{{ artist.get_tags }}</p>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+
+    <h2>Venue</h2>
+    <a href = "{% url 'venue_detail' event.venue.id %}" class="venue-link">
+        <div class="venue-container">
+            <div class="venue-info">
+                <h2>{{ event.venue.name }}</h2>
+                <p>{{ event.venue.address }}</p>
+            </div>
+            <div class="venue-image-container">
+                <img src="{{ event.venue.image.url }}" alt="{{ event.venue.name }}" class="venue-image">
+            </div>
+        </div>
+    </a>
+    <p></p>
+    <h2>Map</h2>
+    <div class="event-map-container">
+        <div id="map" style="height: 400px;"></div>
+    </div>
+
+    
+    {%if event.venue.location %}
+        
+        <script type="text/javascript">
+            function initMap() {
+                var venueLocation = {
+                    lat: {{ event.venue.location.y|default:"0"}},
+                    lng: {{ event.venue.location.x|default:"0"}}
+               };
+               const map = new google.maps.Map(document.getElementById("map"), {
+              center: venueLocation,
+              zoom: 11
+          });
+          // (Optional) Place a marker at the venueLocation
+          new google.maps.Marker({
+              position: venueLocation,
+              map: map,
+              title: "Event Venue"
+          });
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_MAPS_API_KEY }}&callback=initMap" async defer></script>
+    {% else %}
+        <p>Location not available</p>
+    {% endif %}
+{% else %}
+    <h1>Event not found</h1>
+{% endif %}
+{% endblock %}

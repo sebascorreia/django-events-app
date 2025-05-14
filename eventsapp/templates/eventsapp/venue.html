@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Venue{% endblock %}
+
+{% block content %}
+{% if venue %}
+    <h1>{{ venue.name }}</h1>
+    <p>tags: {{ venue.get_tags }}</p>
+    <p>about: {{ venue.about }}</p>
+    <p>address: {{ venue.address }}</p>
+    <p>phone: {{ venue.phone }}</p>
+    <p>email: {{ venue.email }}</p>
+    <p>website: {{ venue.website }}</p>
+    <p></p>
+    <h2>Upcoming Events</h2>
+    <ul>
+        {% for event in venue.get_events %}
+            <li>{{ event.name }} on {{ event.date }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <h1>Venue not found</h1>
+{% endif %}
+{% endblock %}

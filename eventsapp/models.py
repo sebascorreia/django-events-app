@@ -25,6 +25,10 @@ class Venue(models.Model):
     image = models.ImageField(upload_to='venue_images/', blank=True)
     tags = models.ManyToManyField(Tag, related_name='venues', through='VenueTag', blank=True)
     
+    def get_tags(self):
+        return ", ".join(tag.name for tag in self.tags.all())
+    def get_events(self):
+        return self.events.all()
     def __str__(self):
         return self.name
 
@@ -35,18 +39,36 @@ class Artist(models.Model):
     tags= models.ManyToManyField(Tag, related_name='artists', through= 'ArtistTag', blank=True)
     def __str__(self):
         return self.name
+    def get_tags(self):
+        return ", ".join(tag.name for tag in self.tags.all())
+    def get_events(self):
+        return self.events.all()
 class Event(models.Model):
     name = models.CharField(max_length=100)
     date = models.DateTimeField()
-    venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
+    venue = models.ForeignKey(Venue, on_delete=models.CASCADE, related_name='events')
     artists = models.ManyToManyField(Artist, related_name='events', blank=True)
     ticket_price = models.DecimalField(max_digits=10, decimal_places=2)
     about = models.TextField(blank=True)
     image = models.ImageField(upload_to='event_images/', blank=True)
     tags = models.ManyToManyField(Tag, related_name='events', through='EventTag', blank=True)
-    schedule = models.JSONField(blank=True, null=True)
     def __str__(self):
         return self.name
+    def get_tags(self):
+        return ", ".join(tag.name for tag in self.tags.all())
+    def get_artists(self):
+        return self.artists.all()
+    def get_artist_tags(self):
+        artist_tags = []
+        for artist in self.artists.all():
+            artist_tags.extend(artist.tags.all())
+        return artist_tags
+    def get_all_tags(self):
+        all_tags = set(self.tags.all())
+        all_tags.update(self.get_artist_tags())
+        return all_tags
+    def get_schedule(self):
+        return self.schedules.all()
 class Schedule(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='schedules')
     artist = models.ForeignKey(Artist, on_delete=models.SET_NULL, blank = True, null=True, related_name='schedules')

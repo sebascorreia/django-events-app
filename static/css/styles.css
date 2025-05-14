@@ -39,3 +39,21 @@
 .hidden {
     display: none;
 }
+
+.page-container {
+    max-width: 1200px; /* Set a maximum width for the content */
+    margin: 20px auto; /* Center the content horizontally and add vertical spacing */
+    padding: 20px; /* Add padding inside the container */
+    background-color: #2b2b2b; /* Optional: Set a background color */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+    border-radius: 8px; /* Optional: Add rounded corners */
+}
+
+/* Body background for contrast */
+body {
+    background-color: #2c2c2c; /* Light gray background for contrast */
+    font-family: Arial, sans-serif; /* Set a global font */
+    color: #fff; /* Set a global text color */
+    margin: 0; /* Remove default body margin */
+    padding: 0; /* Remove default body padding */
+}
