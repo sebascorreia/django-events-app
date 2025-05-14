@@ -6,12 +6,9 @@ __pycache__/
 # Environment
 .env
 venv/
-db.sqlite3
 
 # VS Code
 .vscode/
 
 # Django
-.DS_Store
-Thumbs.db
-*.log
+
