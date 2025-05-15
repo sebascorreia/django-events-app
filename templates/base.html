@@ -30,10 +30,21 @@
     </nav>
 
     <!-- Centralized content wrapper -->
+
     <div class="page-container">
         {% block content %}{% endblock %}
     </div>
 
     <script src="{% static 'js/navbar.js' %}"></script>
+
+    <script>
+        window.GOOGLE_MAPS_API_KEY = "{{ GOOGLE_MAPS_API_KEY }}";
+    </script>
+      
+      <!-- ✅ THEN load map.js -->
+    <script src="{% static 'js/map.js' %}"></script>
+      
+
+    {% block extra_scripts %}{% endblock %}
 </body>
 </html>

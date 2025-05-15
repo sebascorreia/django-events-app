@@ -3,17 +3,46 @@
 {% block title %}Artist{% endblock %}
 
 {% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'eventsapp/css/artist.css' %}"></link>
+
 {% if artist %}
-    <h1>{{ artist.name }}</h1>
-    <p>Genre: {{ artist.get_tags }}</p>
-    <p>about: {{ artist.about }}</p>
+    <div class="artist-header">
+        <div class="artist-image">
+            <img src="{{ artist.image.url }}"" alt="{{ artist.name }}" class="artist-image">
+        </div>
+        <div class="artist-info">
+            <h1>{{ artist.name }}</h1>
+            <p>{{ artist.get_tags }}</p>
+        </div>
+        <div class="artist-about">
+            <h2> About </h2>
+            <p>{{ artist.about }}</p>
+        </div>
+    </div>
     <h2>Upcoming Events</h2>
-    <ul>
-        {% for event in artist.get_events %}
-            <li>{{ event.name }} on {{ event.date }}</li>
-        {% endfor %}
-    </ul>
-{% else %}
+    <div class="event-cards">
+    {% for event in artist.get_events %}
+    <a href="{% url 'event_detail' event.id %}" class="event-card-link">
+        <div class="event-card">
+            <img src="{{ event.image.url }}" alt="{{ event.name }}" class="event-image">
+            <h3> {{ event.name }}</h3>
+            <p> {{ event.date }}</p>
+            <p> {{ event.venue.name }}</p>
+            <p>{{ event.ticket_price }} </p>
+        </div>
+    </a>
+    {% endfor %}
+    <h2>Upcoming Events Map</h2>
+    <div id="artist-events-map" style="height: 500px;"></div>
+    <script>
+        window.ARTIST_EVENTS = {{ events_markers_json|safe }};
+    </script>
+    {% else %}
     <h1>Artist not found</h1>
 {% endif %}
+{% endblock %}
+
+{% block extra_scripts %}
+    <script src="{% static 'eventsapp/js/artist_map.js' %}"></script>
 {% endblock %}

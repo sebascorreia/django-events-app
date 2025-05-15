@@ -72,38 +72,27 @@
             </div>
         </div>
     </a>
-    <p></p>
+
+    {% if event.venue.location %}
     <h2>Map</h2>
     <div class="event-map-container">
-        <div id="map" style="height: 400px;"></div>
+        <div id="map" 
+            data-lat = "{{ event.venue.location.y }}"
+            data-lng = "{{ event.venue.location.x }}"
+            data-title = " {{ event.venue.name }}"
+            style="height: 400px;">
+        </div>
     </div>
-
-    
-    {%if event.venue.location %}
-        
-        <script type="text/javascript">
-            function initMap() {
-                var venueLocation = {
-                    lat: {{ event.venue.location.y|default:"0"}},
-                    lng: {{ event.venue.location.x|default:"0"}}
-               };
-               const map = new google.maps.Map(document.getElementById("map"), {
-              center: venueLocation,
-              zoom: 11
-          });
-          // (Optional) Place a marker at the venueLocation
-          new google.maps.Marker({
-              position: venueLocation,
-              map: map,
-              title: "Event Venue"
-          });
-      }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_MAPS_API_KEY }}&callback=initMap" async defer></script>
     {% else %}
-        <p>Location not available</p>
+    <p>Location not available</p>
+    
     {% endif %}
 {% else %}
     <h1>Event not found</h1>
 {% endif %}
+{% endblock %}
+{% block extra_scripts %}
+    {% if event and event.venue.location %}
+        <script src="{% static 'eventsapp/js/venue_map.js' %}"></script>
+    {% endif %}
 {% endblock %}
