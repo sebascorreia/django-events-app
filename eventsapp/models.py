@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.gis.db import models as gis_models
 from django.core.exceptions import ValidationError
+from geopy.geocoders import Nominatim
 # Create your models here.
 class Tag(models.Model):
     TAG_TYPES = [
@@ -29,6 +30,12 @@ class Venue(models.Model):
         return ", ".join(tag.name for tag in self.tags.all())
     def get_events(self):
         return self.events.all()
+    def get_city(self):
+        if self.location:
+            geolocator =Nominatim(user_agent="eventsapp")
+            location = geolocator.reverse((self.location.y, self.location.x))
+            return location.raw.get('address', {}).get('city')
+        return None
     def __str__(self):
         return self.name
 

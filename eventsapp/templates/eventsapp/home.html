@@ -24,6 +24,31 @@
             </a>
         {% endfor %}
     </div>
+    <h2> Featured Venues </h2>
+    <div class="venue-cards">
+        {% for venue in venues %}
+            <a href="{% url 'venue_detail' venue.id %}" class="venue-card-link">
+                <div class="venue-card">
+                    <img src="{{ venue.image.url }}" alt="{{ venue.name }}" class="venue-card-image">
+                    <h3> {{ venue.name }}</h3>
+                    <p> {{ venue.get_city }}</p>
+                    <p> {{ venue.get_tags }}</p>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+    <h2> Featured Artists</h2>
+    <div class="artist-cards">
+        {% for artist in artists %}
+        <a href="{% url 'artist_detail' artist.id %}" class="artist-card-link">
+            <div class="artist-card">
+                <img src="{{ artist.image.url }}" alt="{{ artist.name }}" class="artist-card-image">
+                <h3> {{ artist.name }} </h3>
+                <p>{{ artist.get_tags }}</p>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
 {% endblock %}
 
 {% block extra_scripts %}

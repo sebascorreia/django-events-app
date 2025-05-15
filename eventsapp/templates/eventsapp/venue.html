@@ -14,28 +14,34 @@
             <p>{{ venue.get_tags }}</p>
         </div>
         <div class="venue-contact">
-            {% if venue.address %}
-                <p>{{ venue.address }}</p>
-            {% endif %}
             {% if venue.phone %}
-                <p>{{ venue.phone }}</p>
+                <div class="contact-item">
+                    <span class="label">Phone</span>
+                    <p>{{ venue.phone }}</p>
+                </div>
             {% endif %}
             {% if venue.email %}
-                <p>{{ venue.email }}</p>
+                <div class="contact-item">
+                    <span class="label">Email</span>
+                    <p>{{ venue.email }}</p>
+                </div>
+            {% endif %}
+            {% if venue.address %}
+                <div class="contact-item">
+                    <span class="label">Address</span>
+                    <p>{{ venue.address }}</p>
+                </div>
             {% endif %}
             {% if venue.website %}
-                <p><a href="{{ venue.website }}" target="_blank">{{ venue.website }}</a></p>
+                <div class="contact-item">
+                    <span class="label">Website</span>
+                    <p><a href="{{ venue.website }}" class="venue-link" target="_blank">{{ venue.website }}</a></p>
+                </div>
             {% endif %}
         </div>
         
     </div>
-    {% if venue.about %}
-            <div class="venue-about">
-                <h2> About </h2>
-                <p>{{ venue.about }}</p>
-            </div>
-        {% endif %}
-    
+
     <h2>Upcoming Events</h2>
     <div class="event-cards">
         {% for event in venue.get_events %}
@@ -50,6 +56,12 @@
             </a>
         {% endfor %}
     </div>
+    {% if venue.about %}
+    <div class="venue-about">
+        <h2> About </h2>
+        <p>{{ venue.about }}</p>
+    </div>
+    {% endif %}
 
     {% if venue.location %}
     <h2>Map</h2>
