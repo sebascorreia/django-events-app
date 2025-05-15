@@ -2,5 +2,30 @@
 {% extends "base.html" %}
 {% block title %}Home{% endblock %}
 {% block content %}
-<h1>Welcome to MySite</h1>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'eventsapp/css/cards.css' %}"></link>
+    <h1>Events app!</h1>
+    <h2>Upcoming Events Map</h2>
+    <div id="artist-events-map" style="height: 500px;"></div>
+    <script>
+        window.ARTIST_EVENTS = {{ events_markers_json|safe }};
+    </script>
+    <h2> Upcoming Events </h2>
+    <div class="event-cards">
+        {% for event in events %}
+            <a href="{% url 'event_detail' event.id %}" class="event-card-link">
+                <div class="event-card">
+                    <img src="{{ event.image.url }}" alt="{{ event.name }}" class="event-card-image">
+                    <h3> {{ event.name }}</h3>
+                    <p> {{ event.date }}</p>
+                    <p> {{ event.venue.name }}</p>
+                    <p> £{{ event.ticket_price }} </p>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block extra_scripts %}
+    <script src="{% static 'eventsapp/js/artist_map.js' %}"></script>
 {% endblock %}

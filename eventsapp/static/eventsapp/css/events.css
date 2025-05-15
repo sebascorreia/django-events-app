@@ -52,38 +52,8 @@
 }
 
 
-.artist-cards {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}
 
-.artist-card {
-    border: 1px solid #ccc;
-    background-color: #111;
-    border-radius: 8px;
-    padding: 16px;
-    width: 200px;
-    text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-.artist-card p {
-    font-size: 1rem;
-    margin: 5px 0 0;
-    color: #ccc; /* Slightly lighter gray for the tag */
-}
 
-.artist-image {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-bottom: 8px;
-}
-.artist-card-link, .venue-link{
-    text-decoration:none;
-    color: inherit;
-}
 
 .venue-container {
     display: flex;
@@ -122,4 +92,8 @@
     object-fit: cover;
     border-radius: 50%; /* Circular image */
     border: 2px solid #444; /* Subtle border for the image */
+}
+.venue-link{
+    text-decoration:none;
+    color: inherit;
 }

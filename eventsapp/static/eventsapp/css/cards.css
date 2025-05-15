@@ -1,0 +1,64 @@
+.artist-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.artist-card {
+    border: 1px solid #ccc;
+    background-color: #111;
+    border-radius: 8px;
+    padding: 16px;
+    width: 200px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.artist-card p {
+    font-size: 1rem;
+    margin: 5px 0 0;
+    color: #ccc; /* Slightly lighter gray for the tag */
+}
+
+.artist-card-link{
+    text-decoration:none;
+    color: inherit;
+}
+.artist-card-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 8px;
+}
+
+.event-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.event-card {
+    border: 1px solid #2b2a2a;
+    background-color: #111;
+    border-radius: 8px;
+    padding: 16px;
+    width: 250px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.event-card p {
+    font-size: 1rem;
+    margin: 5px 0 0;
+    color: #ccc; /* Slightly lighter gray for the tag */
+}
+
+.event-card-link{
+    text-decoration:none;
+    color: inherit;
+}
+.event-card-image {
+    width: 250px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+}

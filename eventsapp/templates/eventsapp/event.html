@@ -7,6 +7,7 @@
 {% load static %}
 
 <link rel="stylesheet" href="{% static 'eventsapp/css/events.css' %}"> </link>
+<link rel="stylesheet" href="{% static 'eventsapp/css/cards.css' %}"></link>
 
 
 {% if event %}
@@ -52,7 +53,7 @@
         {% for artist in event.get_artists %}
         <a href="{% url 'artist_detail' artist.id %}" class="artist-card-link">
             <div class="artist-card">
-                <img src="{{ artist.image.url }}" alt="{{ artist.name }}" class="artist-image">
+                <img src="{{ artist.image.url }}" alt="{{ artist.name }}" class="artist-card-image">
                 <h3> {{ artist.name }} </h3>
                 <p>{{ artist.get_tags }}</p>
             </div>

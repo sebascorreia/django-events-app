@@ -5,34 +5,39 @@
 {% block content %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'eventsapp/css/artist.css' %}"></link>
+<link rel="stylesheet" href="{% static 'eventsapp/css/cards.css' %}"></link>
 
 {% if artist %}
     <div class="artist-header">
-        <div class="artist-image">
-            <img src="{{ artist.image.url }}"" alt="{{ artist.name }}" class="artist-image">
-        </div>
+        <img src="{{ artist.image.url }}" alt="{{ artist.name }}" class="artist-image">
+
         <div class="artist-info">
             <h1>{{ artist.name }}</h1>
             <p>{{ artist.get_tags }}</p>
         </div>
-        <div class="artist-about">
-            <h2> About </h2>
-            <p>{{ artist.about }}</p>
-        </div>
+
     </div>
+    {% if artist.about %}
+    <div class="artist-about">
+        <h2> About </h2>
+        <p>{{ artist.about }}</p>
+    </div>
+    {% endif %}
     <h2>Upcoming Events</h2>
     <div class="event-cards">
-    {% for event in artist.get_events %}
-    <a href="{% url 'event_detail' event.id %}" class="event-card-link">
-        <div class="event-card">
-            <img src="{{ event.image.url }}" alt="{{ event.name }}" class="event-image">
-            <h3> {{ event.name }}</h3>
-            <p> {{ event.date }}</p>
-            <p> {{ event.venue.name }}</p>
-            <p>{{ event.ticket_price }} </p>
-        </div>
-    </a>
-    {% endfor %}
+        {% for event in artist.get_events %}
+            <a href="{% url 'event_detail' event.id %}" class="event-card-link">
+                <div class="event-card">
+                    <img src="{{ event.image.url }}" alt="{{ event.name }}" class="event-card-image">
+                    <h3> {{ event.name }}</h3>
+                    <p> {{ event.date }}</p>
+                    <p> {{ event.venue.name }}</p>
+                    <p>{{ event.ticket_price }} </p>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+    
     <h2>Upcoming Events Map</h2>
     <div id="artist-events-map" style="height: 500px;"></div>
     <script>
