@@ -19,7 +19,7 @@ class Venue(models.Model):
     name = models.CharField(max_length=100)
     location = gis_models.PointField(null =True, blank=True)
     about = models.TextField(blank=True)
-    address = models.CharField(max_length=255, blank=True)
+    address = models.CharField(max_length=255)
     email = models.EmailField(blank=True)
     phone = models.CharField(max_length=20, blank=True)
     website = models.URLField(blank=True)

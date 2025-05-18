@@ -4,37 +4,57 @@
 {% block content %}
     {% load static %}
     <link rel="stylesheet" href="{% static 'eventsapp/css/cards.css' %}"></link>
+    <link rel="stylesheet" href="{% static 'eventsapp/css/filter.css' %}"></link>
     <h1>Events app!</h1>
     <h2>Upcoming Events Map</h2>
+    
+    <div class="filter-buttons">
+        <button id="location-filter-btn">Location</button>
+        <button id="reset-filter-btn"> Reset Filters</button>
+    </div>
+
+    <div id="location-filter-dropdown"> 
+        <div class="dropdown-menu-box">
+            <div id="radius-slider-container">
+                <label for="radius-slider">Radius (km):</label>
+                <input type="range" id="radius-slider" min="1" max="100" value="10">
+                <span id="radius-value">10</span> km
+            </div>
+        
+            <div id="autocomplete-container"></div>
+        </div>
+    </div>
     <div id="artist-events-map" style="height: 500px;"></div>
     <script>
         window.ARTIST_EVENTS = {{ events_markers_json|safe }};
+        const EVENT_DETAIL_URL = "{% url 'event_detail' 0 %}".replace("0/", "");
     </script>
     <h2> Upcoming Events </h2>
     <div class="event-cards">
         {% for event in events %}
-            <a href="{% url 'event_detail' event.id %}" class="event-card-link">
-                <div class="event-card">
-                    <img src="{{ event.image.url }}" alt="{{ event.name }}" class="event-card-image">
-                    <h3> {{ event.name }}</h3>
-                    <p> {{ event.date }}</p>
-                    <p> {{ event.venue.name }}</p>
-                    <p> £{{ event.ticket_price }} </p>
-                </div>
-            </a>
+            <div class="event-card" data-location="{{ event.venue.location }}" data-event-id="{{ event.id }}">
+                <a href="{% url 'event_detail' event.id %}" class="event-card-link">
+                        <img src="{{ event.image.url }}" alt="{{ event.name }}" class="event-card-image">
+                        <h2> {{ event.name }}</h2>
+                        <p> {{ event.date }}</p>
+                        <p> {{ event.venue.name }}</p>
+                        <p> £{{ event.ticket_price }} </p>
+                </a>
+            </div>
         {% endfor %}
     </div>
     <h2> Featured Venues </h2>
     <div class="venue-cards">
         {% for venue in venues %}
-            <a href="{% url 'venue_detail' venue.id %}" class="venue-card-link">
-                <div class="venue-card">
-                    <img src="{{ venue.image.url }}" alt="{{ venue.name }}" class="venue-card-image">
-                    <h3> {{ venue.name }}</h3>
-                    <p> {{ venue.get_city }}</p>
-                    <p> {{ venue.get_tags }}</p>
+            <div class="venue-card" data-location="{{ venue.location }}" data-venue-id="{{venue.id}}" >
+                <a href="{% url 'venue_detail' venue.id %}" class="venue-card-link">
+                    
+                        <img src="{{ venue.image.url }}" alt="{{ venue.name }}" class="venue-card-image">
+                        <h3> {{ venue.name }}</h3>
+                        <p> {{ venue.get_city }}</p>
+                        <p> {{ venue.get_tags }}</p>
+                </a>
                 </div>
-            </a>
         {% endfor %}
     </div>
     <h2> Featured Artists</h2>
@@ -53,4 +73,5 @@
 
 {% block extra_scripts %}
     <script src="{% static 'eventsapp/js/artist_map.js' %}"></script>
+    <script src="{% static 'eventsapp/js/map_filter.js' %}"></script>
 {% endblock %}

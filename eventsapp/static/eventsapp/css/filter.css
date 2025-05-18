@@ -1,0 +1,42 @@
+#location-filter-dropdown {
+    display: none;
+    position: absolute;
+    z-index: 100;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 1em;
+    width: 300px;
+    color: black;
+}
+
+#location-filter-btn {
+    position: relative;
+    padding: 8px 12px;
+    background-color: #0066ff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#radius-slider-container {
+    margin-bottom: 1em;
+}
+
+.dropdown-menu-box {
+    position: relative;
+    display: inline-block;
+    flex-direction: column;
+    gap: 1em;
+}
+#reset-filter-btn {
+    position: relative;
+    padding: 8px 12px;
+    background-color: #0066ff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}

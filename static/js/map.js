@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", async function () {
           h ||
           (h = new Promise(async (f, n) => {
             await (a = m.createElement("script"));
-            e.set("libraries", [...r] + "");
+            e.set("libraries", [...r, "places"] + "");
             for (k in g)
               e.set(
                 k.replace(/[A-Z]/g, (t) => "_" + t[0].toLowerCase()),

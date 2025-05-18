@@ -25,7 +25,10 @@ class HomeView(generic.TemplateView):
                 "title": escape(event.name),
                 "venue": escape(event.venue.name),
                 "date": str(event.date),
-                "price": float(event.ticket_price)
+                "price": float(event.ticket_price),
+                "image": event.image.url if event.image else None,
+                "id": event.id,
+                "venue_id": event.venue.id,
             })
         context['GOOGLE_MAPS_API_KEY'] = settings.GOOGLE_MAPS_API_KEY    
         context['events_markers_json'] = json.dumps(markers)
@@ -48,7 +51,9 @@ class ArtistDetailView(generic.DetailView):
                 "title": escape(event.name),
                 "venue": escape(event.venue.name),
                 "date": str(event.date),
-                "price": float(event.ticket_price)
+                "price": float(event.ticket_price),
+                "image": event.image.url if event.image else None,
+                "id": event.id,
             })
         context['GOOGLE_MAPS_API_KEY'] = settings.GOOGLE_MAPS_API_KEY
         context['events_markers_json'] = json.dumps(markers)
