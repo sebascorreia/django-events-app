@@ -42,7 +42,7 @@ class ArtistDetailView(generic.DetailView):
     def get_context_data(self, **kwargs):
         context= super().get_context_data(**kwargs)
         artist = self.get_object()
-        events = artist.get_events().filter(venue__location__isnull=False)
+        events = artist.get_events()
         
         markers = []
         for event in events:
@@ -55,6 +55,8 @@ class ArtistDetailView(generic.DetailView):
                 "price": float(event.ticket_price),
                 "image": event.image.url if event.image else None,
                 "id": event.id,
+                "venue_id": event.venue.id,
+                "artist_ids":[artist.id]
             })
         context['GOOGLE_MAPS_API_KEY'] = settings.GOOGLE_MAPS_API_KEY
         context['events_markers_json'] = json.dumps(markers)
