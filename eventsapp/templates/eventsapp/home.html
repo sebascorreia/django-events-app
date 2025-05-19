@@ -34,7 +34,9 @@
         {% for event in events %}
             <div class="event-card" data-location="{{ event.venue.location }}" data-event-id="{{ event.id }}">
                 <a href="{% url 'event_detail' event.id %}" class="event-card-link">
+                    {% if event.image %}
                         <img src="{{ event.image.url }}" alt="{{ event.name }}" class="event-card-image">
+                    {% endif %}
                         <h2> {{ event.name }}</h2>
                         <p> {{ event.date }}</p>
                         <p> {{ event.venue.name }}</p>
@@ -48,11 +50,14 @@
         {% for venue in venues %}
             <div class="venue-card" data-location="{{ venue.location }}" data-venue-id="{{venue.id}}" >
                 <a href="{% url 'venue_detail' venue.id %}" class="venue-card-link">
-                    
+                    {% if venue.image %}
                         <img src="{{ venue.image.url }}" alt="{{ venue.name }}" class="venue-card-image">
+                    {% endif %}
                         <h3> {{ venue.name }}</h3>
                         <p> {{ venue.get_city }}</p>
+                    {% if venue.tags %}
                         <p> {{ venue.get_tags }}</p>
+                    {% endif %}
                 </a>
                 </div>
         {% endfor %}
@@ -60,13 +65,17 @@
     <h2> Featured Artists</h2>
     <div class="artist-cards">
         {% for artist in artists %}
-        <a href="{% url 'artist_detail' artist.id %}" class="artist-card-link">
-            <div class="artist-card">
-                <img src="{{ artist.image.url }}" alt="{{ artist.name }}" class="artist-card-image">
+        <div class="artist-card" data-artist-id="{{ artist.id }}">
+            <a href="{% url 'artist_detail' artist.id %}" class="artist-card-link">    
+                {% if artist.image %}
+                    <img src="{{ artist.image.url }}" alt="{{ artist.name }}" class="artist-card-image">
+                {% endif %}
                 <h3> {{ artist.name }} </h3>
-                <p>{{ artist.get_tags }}</p>
-            </div>
-        </a>
+                {% if artist.tags %}
+                    <p>{{ artist.get_tags }}</p>
+                {% endif %}
+            </a>
+        </div>
         {% endfor %}
     </div>
 {% endblock %}

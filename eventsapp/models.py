@@ -23,7 +23,7 @@ class Venue(models.Model):
     email = models.EmailField(blank=True)
     phone = models.CharField(max_length=20, blank=True)
     website = models.URLField(blank=True)
-    image = models.ImageField(upload_to='venue_images/', blank=True)
+    image = models.ImageField(upload_to='venue_images/')
     tags = models.ManyToManyField(Tag, related_name='venues', through='VenueTag', blank=True)
     
     def get_tags(self):
@@ -42,7 +42,7 @@ class Venue(models.Model):
 class Artist(models.Model):
     name = models.CharField(max_length=100)
     about = models.TextField(blank=True)
-    image = models.ImageField(upload_to='artist_images/', blank=True)
+    image = models.ImageField(upload_to='artist_images/')
     tags= models.ManyToManyField(Tag, related_name='artists', through= 'ArtistTag', blank=True)
     def __str__(self):
         return self.name
@@ -57,8 +57,8 @@ class Event(models.Model):
     artists = models.ManyToManyField(Artist, related_name='events', blank=True)
     ticket_price = models.DecimalField(max_digits=10, decimal_places=2)
     about = models.TextField(blank=True)
-    image = models.ImageField(upload_to='event_images/', blank=True)
-    tags = models.ManyToManyField(Tag, related_name='events', through='EventTag', blank=True)
+    image = models.ImageField(upload_to='event_images/')
+    tags = models.ManyToManyField(Tag, related_name='events', through='EventTag')
     def __str__(self):
         return self.name
     def get_tags(self):

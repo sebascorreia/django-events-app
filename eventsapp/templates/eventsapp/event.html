@@ -53,9 +53,13 @@
         {% for artist in event.get_artists %}
         <a href="{% url 'artist_detail' artist.id %}" class="artist-card-link">
             <div class="artist-card">
-                <img src="{{ artist.image.url }}" alt="{{ artist.name }}" class="artist-card-image">
+                {% if artist.image %}
+                    <img src="{{ artist.image.url }}" alt="{{ artist.name }}" class="artist-card-image">
+                {% endif %}
                 <h3> {{ artist.name }} </h3>
-                <p>{{ artist.get_tags }}</p>
+                {% if artist.tags %}
+                    <p>{{ artist.get_tags }}</p>
+                {% endif %}
             </div>
         </a>
         {% endfor %}
@@ -68,6 +72,7 @@
                 <h2>{{ event.venue.name }}</h2>
                 <p>{{ event.venue.address }}</p>
             </div>
+            
             <div class="venue-image-container">
                 <img src="{{ event.venue.image.url }}" alt="{{ event.venue.name }}" class="venue-image">
             </div>

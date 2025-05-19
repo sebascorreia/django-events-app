@@ -29,6 +29,7 @@ class HomeView(generic.TemplateView):
                 "image": event.image.url if event.image else None,
                 "id": event.id,
                 "venue_id": event.venue.id,
+                "artist_ids": list(event.artists.values_list("id", flat=True)) if event.artists.exists() else []
             })
         context['GOOGLE_MAPS_API_KEY'] = settings.GOOGLE_MAPS_API_KEY    
         context['events_markers_json'] = json.dumps(markers)
